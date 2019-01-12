@@ -5,9 +5,17 @@
 		{{!-- <link rel="stylesheet" href="/assets/css/style.css" type="text/css" /> --}}
 		<title>Guardian Scraper</title>
 		<script src="https://code.jquery.com/jquery.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="app.js"></script>
 	</head>
 	<body>
+		<form action="/scrape" method="GET">
+			<button type="submit" id="scraper">Scrape For New Articles</button>
+		</form>
+		<form action="/search" method="POST">
+			<button type="submit" id="search-submit">Submit</button>
+			<input type="text" name="search" placeholder="Search for articles" id="search-input">
+		</form>
 		{{{ body }}}
 	</body>
 </html>
