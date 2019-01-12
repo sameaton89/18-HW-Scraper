@@ -30,7 +30,6 @@ app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
 
-
 // If deployed, use the deployed database. Otherwise use the local scraper database
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scraper";
 
@@ -143,7 +142,8 @@ app.get("/scrape", function(req, res) {
   app.listen(PORT, function() {
     console.log("App running on port " + PORT + "!");
   });
-  
+
+
 // // Hook mongojs configuration to the db variable
 // var db = mongojs(databaseUrl, collections);
 // db.on("error", function(error) {
@@ -205,10 +205,4 @@ app.get("/scrape", function(req, res) {
 
 //   // Send a "Scrape Complete" message to the browser
 //   res.send("Scrape Complete");
-// });
-
-
-// // Listen on port 8080
-// app.listen(8080, function() {
-//   console.log("App running on port 8080!");
 // });
