@@ -3,12 +3,9 @@ $.getJSON("/articles", function(data) {
   // For each one
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
-    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+    $("#articles").append("<p class='title' data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
   }
 });
-
-
-
 
 // Whenever someone clicks a p tag
 $(document).on("click", "p", function() {
@@ -73,21 +70,6 @@ $(document).on("click", "#savenote", function() {
   $("#bodyinput").val("");
 });
 
-$("#scrape").on("click", function(event) {
-  event.preventDefault;
-  $.ajax({
-      method: "GET",
-      url: "/scrape" // Modify the url according to your application logic
-  }).done(function(yourData) {
-    console.log(yourData);
-      // Now open the modal! (Assuming you are using bootstrap.js)
-      $(".modal").modal("show");
-      // If you used 'res.json' then you can use yourData here
-      $(".modal-body").html(yourData);
-  });
-  console.log("yeah");
-});
-
 $(document).on("click", "#scrape", function() {
   event.preventDefault;
   $.ajax({
@@ -102,15 +84,6 @@ $(document).on("click", "#scrape", function() {
   });
 });
 
-var renderArticle = function() {
-  $.ajax({
-    method: "GET",
-    url: "/articles"
-  }).then(function(response) {
-    $("#articles").prepend(response);
-  });
-}
-
 $(document).on("click", "#show-dat", function() {
   // $.ajax({
   //   method: "GET",
@@ -118,6 +91,7 @@ $(document).on("click", "#show-dat", function() {
   // }).then(function(response) {
   //   console.log(response);
   // });
+  $("#articles").empty();
   $.getJSON("/articles", function(data) {
     // For each one
     for (var i = 0; i < data.length; i++) {
@@ -125,4 +99,4 @@ $(document).on("click", "#show-dat", function() {
       $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
     }
   });
-})
+});
