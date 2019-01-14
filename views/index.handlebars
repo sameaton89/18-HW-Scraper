@@ -1,7 +1,7 @@
 {{!-- <button type="submit" id="show-dat">Show Dat</button> --}}
 
 <h1>Guardian Scraper</h1>
-<button type="submit" id="scrape">Scrape For New Articles</button>
+<button type="submit" class="btn-default" id="scrape">Scrape For New Articles</button>
 
 <h2>Articles</h2>
 
@@ -47,9 +47,11 @@
       <div class="modal-body" id="notes-modal-body">
         <p>Modal body text goes here.</p>
       </div>
+      <div class="modal-body" id="notes-modal-comments">
+      </div>
       <div class="modal-footer">
-        {{!-- <button type="button" class="btn btn-primary">Save changes</button> --}}
-        <button type="button" class="btn btn-secondary" id="show-dat" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="save-dat">Save changes</button>
+        <button type="button" class="btn btn-secondary" id="save-dat" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

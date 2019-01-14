@@ -93,17 +93,58 @@ $(document).on("click", "p", function() {
       // An input to enter a new title
       $("#notes-modal-body").html("<input id='titleinput' name='title' >");
       // A textarea to add a new note body
-      $("#notes-modal-body").append("<textarea id='bodyinput' name='body'></textarea>");
+      $("#notes-modal-body").append("<br><textarea id='bodyinput' name='body'></textarea>");
       // A button to submit a new note, with the id of the article saved to it
-      $("#notes-modal-body").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+      $("#notes-modal-body").append("<br><button data-id='" + data._id + "' id='savenote'>Save Note</button>");
 
       // If there's a note in the article
       if (data.note) {
         // Place the title of the note in the title input
-        $("#titleinput").val(data.note.title);
-        // Place the body of the note in the body textarea
-        $("#bodyinput").val(data.note.body);
+        $("#notes-modal-body").append("<p><b>" + data.note.title + "</p></b>" + data.note.body);
 
       }
+
     });
 });
+
+// Loads results onto the page
+// var getResults = function () {
+//   // Empty any results currently on the page
+//   $("#notes-modal, #notes-modal-body").empty();
+//   // Grab all of the current notes
+//   $.getJSON("/articles", function(data) {
+//     // For each note...
+//     for (var i = 0; i < data.length; i++) {
+//       // ...populate #results with a p-tag that includes the note's title and object id
+//       $("#notes-modal-body").prepend("<p class='data-entry' data-id=" + data[i]._id + "><span class='dataTitle' data-id=" +
+//         data[i]._id + ">" + data[i].title + "</span><span class=delete>X</span></p>");
+//     }
+//   });
+// }
+
+// // When the #make-new button is clicked
+// $(document).on("click", "#save-dat", function() {
+//   // AJAX POST call to the submit route on the server
+//   // This will take the data from the form and send it to the server
+//   $.ajax({
+//     type: "POST",
+//     dataType: "json",
+//     url: "/submit",
+//     data: {
+//       title: $("title").val(),
+//       note: $("note").val(),
+//       created: Date.now()
+//     }
+//   })
+//   // If that API call succeeds, add the title and a delete button for the note to the page
+//     .then(function(data) {
+//     // Add the title and delete button to the #results section
+//       $("#notes-modal-body").prepend("<p class='data-entry' data-id=" + data._id + "><span class='dataTitle' data-id=" +
+//       data._id + ">" + data.title + "</span><span class=delete>X</span></p>");
+//       // Clear the note and title inputs on the page
+//       $("#note").val("");
+//       $("#title").val("");
+//     });
+// });
+
+
