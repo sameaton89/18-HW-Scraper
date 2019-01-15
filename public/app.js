@@ -82,7 +82,6 @@ $(document).on("click", "p", function() {
     // With that done, add the note information to the page
     .then(function(data) {
       console.log(data);
-
       // Now open the modal! (Assuming you are using bootstrap.js)
       $("#notes-modal").modal("show");
       // If you used 'res.json' then you can use yourData here
@@ -100,12 +99,17 @@ $(document).on("click", "p", function() {
       // If there's a note in the article
       if (data.note) {
         // Place the title of the note in the title input
-        $("#notes-modal-body").append("<p><b>" + data.note.title + "</p></b>" + data.note.body);
+        // $("#notes-modal-body").append("<p><b>" + data.note[0].title + "</p></b>" + data.note[0].body);
+
+        for (var i = 0; i < data.note.length ; i++) {
+          $("#notes-modal-body").prepend("<p><b>" + data.note[i].title + "</b><br>" + data.note[i].body) + "</p>"}
 
       }
 
     });
 });
+
+
 
 // Loads results onto the page
 // var getResults = function () {
