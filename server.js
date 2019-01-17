@@ -118,6 +118,7 @@ app.get("/scrape", function(req, res) {
       });
   });
   
+
   // Route for saving/updating an Article's associated Note
   app.post("/articles/:id", function(req, res) {
     // Create a new note and pass the req.body to the entry
@@ -137,6 +138,29 @@ app.get("/scrape", function(req, res) {
         // If an error occurred, send it to the client
         res.json(err);
       });
+  });
+
+  // Delete One from the DB
+app.get("/articles/:id", function(req, res) {
+    // Remove a note using the objectID
+    db.notes.remove(
+      {
+        _id: notes.ObjectID(req.params.id)
+      },
+      function(error, removed) {
+        // Log any errors from mongojs
+        if (error) {
+          console.log(error);
+          res.send(error);
+        }
+        else {
+          // Otherwise, send the mongojs response to the browser
+          // This will fire off the success function of the ajax request
+          console.log(removed);
+          res.send(removed);
+        }
+      }
+    );
   });
   
   // Start the server

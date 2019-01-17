@@ -68,7 +68,7 @@ $(document).on("click", "#show-dat", function() {
 });
 
 // Whenever someone clicks a p tag
-$(document).on("click", "p", function() {
+$(document).on("click", ".title", function() {
   // Empty the notes from the note section
   // $("#notes-modal").empty();
   // Save the id from the p tag
@@ -94,7 +94,9 @@ $(document).on("click", "p", function() {
       // A textarea to add a new note body
       $("#notes-modal-body").append("<br><textarea id='bodyinput' name='body'></textarea>");
       // A button to submit a new note, with the id of the article saved to it
-      $("#notes-modal-body").append("<br><button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+      $("#notes-modal-body").append("<br><button data-id='" + data._id + "' type='button' class='btn btn-primary' id='savenote'>Save Note</button>");
+
+
 
       // If there's a note in the article
       if (data.note) {
@@ -102,7 +104,8 @@ $(document).on("click", "p", function() {
         // $("#notes-modal-body").append("<p><b>" + data.note[0].title + "</p></b>" + data.note[0].body);
 
         for (var i = 0; i < data.note.length ; i++) {
-          $("#notes-modal-body").prepend("<p><b>" + data.note[i].title + "</b><br>" + data.note[i].body) + "</p>"}
+          $("#notes-modal-body").prepend("<p data-id=" +
+          data.note[i]._id + "><b>" + data.note[i].title + "</b><br>" + data.note[i].body + " <span class='delete'>X</span></p>")}
 
       }
 
@@ -110,7 +113,28 @@ $(document).on("click", "p", function() {
 });
 
 
+// When user clicks the delete button for a note
+$(document).on("click", ".delete", function() {
+  // Save the p tag that encloses the button
+  var selected = $(this).parent();
+  // Make an AJAX GET request to delete the specific note
+  // this uses the data-id of the p-tag, which is linked to the specific note
+  $.ajax({
+    type: "GET",
+    url: "/articles/" + selected.attr("data-id"),
 
+    // On successful call
+    success: function(response) {
+      // Remove the p-tag from the DOM
+      selected.remove();
+      // Clear the note and title inputs
+      // $("#note").val("");
+      // $("#title").val("");
+      // Make sure the #action-button is submit (in case it's update)
+      // $("#action-button").html("<button id='make-new'>Submit</button>");
+    }
+  });
+});
 // Loads results onto the page
 // var getResults = function () {
 //   // Empty any results currently on the page
