@@ -27,8 +27,41 @@ $(document).on("click", "#savenote", function() {
     .then(function(data) {
       // Log the response
       console.log(data);
+      $.ajax({
+        method: "GET",
+        url: "/articles/" + thisId})
+        // With that done, add the note information to the page
+        .then(function(data) {
+          console.log(data);
+          // Now open the modal! (Assuming you are using bootstrap.js)
+          $("#notes-modal").modal("show");
+          // If you used 'res.json' then you can use yourData here
+          $("#notes-modal-body").html(data);
+    
+          // The title of the article
+          $("#notes-modal-title").html("<h2>" + data.title + "</h2>");
+          // An input to enter a new title
+          $("#notes-modal-body").html("<input id='titleinput' name='title' >");
+          // A textarea to add a new note body
+          $("#notes-modal-body").append("<br><textarea id='bodyinput' name='body'></textarea>");
+          // A button to submit a new note, with the id of the article saved to it
+          $("#notes-modal-body").append("<br><button data-id='" + data._id + "' type='button' class='btn btn-primary' id='savenote'>Save Note</button>");
+    
+    
+    
+          // If there's a note in the article
+          if (data.note) {
+            // Place the title of the note in the title input
+            // $("#notes-modal-body").append("<p><b>" + data.note[0].title + "</p></b>" + data.note[0].body);
+    
+            for (var i = 0; i < data.note.length ; i++) {
+              $("#notes-modal-body").prepend("<p data-id=" +
+              data.note[i]._id + "><b>" + data.note[i].title + "</b><br>" + data.note[i].body + " <span class='delete'>X</span></p>")}
+    
+          }
+    
+        });
 
-      $("#notes-modal-body").prepend("Comment posted successfully! <button onclick='reload()'>Go Back</button>");
     });
 
   // Also, remove the values entered in the input and textarea for note entry
@@ -36,44 +69,6 @@ $(document).on("click", "#savenote", function() {
   $("#bodyinput").val("");
 });
 
-function reload() {
-  event.preventDefault;
-  $.ajax({
-    method: "GET",
-    url: "/articles/" + thisId
-  }).then(function(data) {
-    console.log(data);
-    // Now open the modal! (Assuming you are using bootstrap.js)
-    $("#notes-modal").modal("show");
-    // If you used 'res.json' then you can use yourData here
-    $("#notes-modal-body").html(data);
-
-    // The title of the article
-    $("#notes-modal-title").html("<h2>" + data.title + "</h2>");
-    // An input to enter a new title
-    $("#notes-modal-body").html("<input id='titleinput' name='title' >");
-    // A textarea to add a new note body
-    $("#notes-modal-body").append("<br><textarea id='bodyinput' name='body'></textarea>");
-    // A button to submit a new note, with the id of the article saved to it
-    $("#notes-modal-body").append("<br><button data-id='" + data._id + "' type='button' class='btn btn-primary' id='savenote'>Save Note</button>");
-
-
-
-    // If there's a note in the article
-    if (data.note) {
-      // Place the title of the note in the title input
-      // $("#notes-modal-body").append("<p><b>" + data.note[0].title + "</p></b>" + data.note[0].body);
-
-      for (var i = 0; i < data.note.length ; i++) {
-        $("#notes-modal-body").prepend("<p data-id=" +
-        data.note[i]._id + "><b>" + data.note[i].title + "</b><br>" + data.note[i].body + " <span class='delete'>X</span></p>")}
-
-    }
-
-  });
-
-  
-}
 
 $(document).on("click", "#scrape", function() {
   event.preventDefault;
