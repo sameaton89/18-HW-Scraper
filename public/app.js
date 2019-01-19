@@ -3,7 +3,7 @@ $.getJSON("/articles", function(data) {
   // For each one
   for (var i = data.length - 1; i >= 0; i--) {
     // Display the apropos information on the page
-    $("#articles").append("<p class='title' data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+    $("#articles").append("<h3><p class='title' data-id='" + data[i]._id + "'>" + data[i].title + "</h3><a href='" + data[i].link + "'>" + data[i].link + "</a></p>");
   }
 });
 
@@ -40,12 +40,9 @@ $(document).on("click", "#savenote", function() {
     
           // The title of the article
           $("#notes-modal-title").html("<h2>" + data.title + "</h2>");
-          // An input to enter a new title
-          $("#notes-modal-body").html("<input id='titleinput' name='title' >");
-          // A textarea to add a new note body
-          $("#notes-modal-body").append("<br><textarea id='bodyinput' name='body'></textarea>");
-          // A button to submit a new note, with the id of the article saved to it
-          $("#notes-modal-body").append("<br><button data-id='" + data._id + "' type='button' class='btn btn-primary' id='savenote'>Save Note</button>");
+          // An input to enter a new title, textarea for comment, submit button
+          $("#notes-modal-body").html("<div class='form-group'><label for='title'><b>Title</b></label><input type='text' class='form-control' id='titleinput' name='title'></div><br><b>Comment</b><div class='form-group'><textarea class='form-control' rows='5' id='bodyinput' name='body'></textarea></div><br><button data-id='" + data._id + "' type='button' class='btn btn-primary' id='savenote'>Save Note</button>");
+
     
     
     
@@ -61,6 +58,7 @@ $(document).on("click", "#savenote", function() {
           }
     
         });
+
 
     });
 
@@ -93,10 +91,10 @@ $(document).on("click", "#show-dat", function() {
   // });
   $("#articles").empty();
   $.getJSON("/articles", function(data) {
-    // For each one
-    for (var i = 0; i < data.length; i++) {
-      // Display the apropos information on the page
-      $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+  // For each one
+  for (var i = data.length - 1; i >= 0; i--) {
+    // Display the apropos information on the page
+    $("#articles").append("<h3><p class='title' data-id='" + data[i]._id + "'>" + data[i].title + "</h3><a href='" + data[i].link + "'>" + data[i].link + "</a></p>");
     }
   });
 });
@@ -124,12 +122,7 @@ $(document).on("click", ".title", function() {
       // The title of the article
       $("#notes-modal-title").html("<h2>" + data.title + "</h2>");
       // An input to enter a new title
-      $("#notes-modal-body").html("<input id='titleinput' name='title' >");
-      // A textarea to add a new note body
-      $("#notes-modal-body").append("<br><textarea id='bodyinput' name='body'></textarea>");
-      // A button to submit a new note, with the id of the article saved to it
-      $("#notes-modal-body").append("<br><button data-id='" + data._id + "' type='button' class='btn btn-primary' id='savenote'>Save Note</button>");
-
+      $("#notes-modal-body").html("<div class='form-group'><label for='title'><b>Title</b></label><input type='text' class='form-control' id='titleinput' name='title'></div><br><b>Comment</b><div class='form-group'><textarea class='form-control' rows='5' id='bodyinput' name='body'></textarea></div><br><button data-id='" + data._id + "' type='button' class='btn btn-primary' id='savenote'>Save Note</button>");
 
 
       // If there's a note in the article
@@ -139,7 +132,8 @@ $(document).on("click", ".title", function() {
 
         for (var i = 0; i < data.note.length ; i++) {
           $("#notes-modal-body").prepend("<p data-id=" +
-          data.note[i]._id + "><b>" + data.note[i].title + "</b><br>" + data.note[i].body + " <span class='delete'>X</span></p>")}
+          data.note[i]._id + "><b>" + data.note[i].title + "</b><br>" + data.note[i].body + " <span class='delete' data-id=" +
+          data.note[i]._id + ">X</span></p>")}
 
       }
 
@@ -162,10 +156,10 @@ $(document).on("click", ".delete", function() {
       // Remove the p-tag from the DOM
       selected.remove();
       // Clear the note and title inputs
-      // $("#note").val("");
-      // $("#title").val("");
+      $("#note").val("");
+      $("#title").val("");
       // Make sure the #action-button is submit (in case it's update)
-      // $("#action-button").html("<button id='make-new'>Submit</button>");
+      $("#action-button").html("<button id='make-new'>Submit</button>");
     }
   });
 });

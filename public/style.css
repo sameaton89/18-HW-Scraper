@@ -2,3 +2,18 @@
     color: red;
     float: right;
 }
+
+/* .modal-footer {
+    float: left;
+} */
+
+#scrape {
+    float: right;
+    margin: 30px;
+    padding: 20px;
+}
+
+#article-header {
+    padding: 10px;
+    display: inline;
+}
